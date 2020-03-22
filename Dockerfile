@@ -14,8 +14,7 @@ RUN /usr/local/bin/install-plugins.sh workflow-aggregator && \
     /usr/local/bin/install-plugins.sh github-branch-source
 
 # install Maven, Java, Docker, AWS
-RUN apk add --no-cache maven \
-    openjdk8 \
+RUN apt-get update && apt-get install -y maven \
     docker \
     gettext
 
@@ -29,3 +28,6 @@ RUN  wget https://storage.googleapis.com/kubernetes-release/release/$(curl -s ht
 # See https://github.com/kubernetes/minikube/issues/956.
 # THIS IS FOR MINIKUBE TESTING ONLY - it is not production standard (we're running as root!)
 RUN chown -R root "$JENKINS_HOME" /usr/share/jenkins/ref
+
+#Clean cache
+RUN apt-get clean
